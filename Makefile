@@ -591,7 +591,7 @@ include ${ROOTDIR}/support/${OSENV}.mk
 $(BUILDDIR)/timestamp.c: FORCE
 	@mkdir -p $(dir $@)
 	@echo '#include "build.h"' > $@
-	@echo 'const char* build_timestamp = "'`date -Iseconds`'";' >> $@
+	@echo 'const char* build_timestamp = "'`date +%Y-%m-%dT%H:%M:%S%z`'";' >> $@
 
 $(BUILDDIR)/timestamp.o: $(BUILDDIR)/timestamp.c
 	$(CC) -c -o $@ $<
