@@ -35,7 +35,9 @@ time_t timegm(struct tm* const t) {
     return -1;
   return result;
 }
+#endif /* ENABLE_ANDROID */
 
+#if (ENABLE_ANDROID || defined PLATFORM_FREEBSD) && !defined IPTOS_DSCP_MASK
 #define	IPTOS_DSCP_MASK		0xfc
 #define	IPTOS_DSCP(x)		((x) & IPTOS_DSCP_MASK)
 #define	IPTOS_DSCP_AF11		0x28
@@ -51,7 +53,9 @@ time_t timegm(struct tm* const t) {
 #define	IPTOS_DSCP_AF42		0x90
 #define	IPTOS_DSCP_AF43		0x98
 #define	IPTOS_DSCP_EF		0xb8
+#endif /* not defined IPTOS_DSCP_MASK */
 
+#if (ENABLE_ANDROID || defined PLATFORM_FREEBSD) && !defined IPTOS_CLASS_MASK
 #define	IPTOS_CLASS_MASK	0xe0
 #define	IPTOS_CLASS(class)	((class) & IPTOS_CLASS_MASK)
 #define	IPTOS_CLASS_CS0		0x00
@@ -65,6 +69,6 @@ time_t timegm(struct tm* const t) {
 
 #define	IPTOS_CLASS_DEFAULT	IPTOS_CLASS_CS0
 
-#endif
+#endif /* not defined IPTOS_CLASS_MASK */
 
 #endif /* COMPAT_H */
