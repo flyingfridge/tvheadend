@@ -22,7 +22,7 @@ tvh_iconv(iconv_t cd, char **inbuf, size_t *inbytesleft,
 {
 #ifdef PLATFORM_FREEBSD
   return iconv(cd, (const char **)inbuf, inbytesleft,
-                   (const char **)outbuf, outbytesleft);
+                   (char **)outbuf, outbytesleft);
 #else
   return iconv(cd, inbuf, inbytesleft, outbuf, outbytesleft);
 #endif
