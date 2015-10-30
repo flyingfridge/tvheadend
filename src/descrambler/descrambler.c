@@ -675,8 +675,8 @@ descrambler_descramble ( service_t *t,
                                 ((mpegts_service_t *)t)->s_dvb_svcname);
         if (key_late(dr, ki, dispatch_clock)) {
           tvherror("descrambler", "ECM - key late (%ld seconds) for service \"%s\"",
-                                  dispatch_clock - dr->dr_ecm_last_key_time,
-                                  ((mpegts_service_t *)t)->s_dvb_svcname);
+                         (long int)(dispatch_clock - dr->dr_ecm_last_key_time),
+                         ((mpegts_service_t *)t)->s_dvb_svcname);
           if (ecm_reset(t, dr)) {
             flush_data = 1;
             goto next;

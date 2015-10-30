@@ -597,7 +597,7 @@ epggrab_ota_start_cb ( void *p );
 static void
 epggrab_ota_next_arm( time_t next )
 {
-  tvhtrace("epggrab", "next ota start event in %li seconds", next - time(NULL));
+  tvhtrace("epggrab", "next ota start event in %li seconds", (long int)(next - time(NULL)));
   gtimer_arm_abs(&epggrab_ota_start_timer, epggrab_ota_start_cb, NULL, next);
   dbus_emit_signal_s64("/epggrab/ota", "next", next);
 }
