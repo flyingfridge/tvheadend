@@ -986,7 +986,7 @@ main(int argc, char **argv)
   SSL_load_error_strings();
   SSL_library_init();
   /* Rand seed */
-  randseed.pid = main_tid;
+  randseed.pid = (pid_t)main_tid;
   gettimeofday(&randseed.tv, NULL);
   uuid_random(randseed.ru, sizeof(randseed.ru));
   RAND_seed(&randseed, sizeof(randseed));
