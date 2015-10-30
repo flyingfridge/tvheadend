@@ -109,7 +109,7 @@ int tvhpoll_add
   struct epoll_event ev;
   for (i = 0; i < num; i++) {
     memset(&ev, 0, sizeof(ev));
-    ev.data.u64 = evs[i].data.u64;
+    ev.data.ptr = evs[i].data.ptr;
     if (evs[i].events & TVHPOLL_IN)  ev.events |= EPOLLIN;
     if (evs[i].events & TVHPOLL_OUT) ev.events |= EPOLLOUT;
     if (evs[i].events & TVHPOLL_PRI) ev.events |= EPOLLPRI;
@@ -126,7 +126,7 @@ int tvhpoll_add
   tvhpoll_alloc(tp, num);
   for (i = 0; i < num; i++) {
     if (evs[i].events & TVHPOLL_OUT){
-      EV_SET(tp->ev+i, evs[i].fd, EVFILT_WRITE, EV_ADD, 0, 0, (intptr_t*)evs[i].data.u64);
+      EV_SET(tp->ev+i, evs[i].fd, EVFILT_WRITE, EV_ADD, 0, 0, evs[i].data.ptr);
       rc = kevent(tp->fd, tp->ev+i, 1, NULL, 0, NULL);
       if (rc == -1) {
         tvhlog(LOG_ERR, "tvhpoll", "failed to add kqueue WRITE filter [%d|%d]",
@@ -135,7 +135,7 @@ int tvhpoll_add
       }
     }
     if (evs[i].events & TVHPOLL_IN){
-      EV_SET(tp->ev+i, evs[i].fd, EVFILT_READ, EV_ADD, 0, 0, (intptr_t*)evs[i].data.u64);
+      EV_SET(tp->ev+i, evs[i].fd, EVFILT_READ, EV_ADD, 0, 0, evs[i].data.ptr);
       rc = kevent(tp->fd, tp->ev+i, 1, NULL, 0, NULL);
       if (rc == -1) {
         tvhlog(LOG_ERR, "tvhpoll", "failed to add kqueue READ filter [%d|%d]",
@@ -177,7 +177,7 @@ int tvhpoll_wait
 #if ENABLE_EPOLL
   nfds = epoll_wait(tp->fd, tp->ev, num, ms);
   for (i = 0; i < nfds; i++) {
-    evs[i].data.u64 = tp->ev[i].data.u64;
+    evs[i].data.ptr = tp->ev[i].data.ptr;
     evs[i].events   = 0;
     if (tp->ev[i].events & EPOLLIN)  evs[i].events |= TVHPOLL_IN;
     if (tp->ev[i].events & EPOLLOUT) evs[i].events |= TVHPOLL_OUT;
@@ -196,7 +196,7 @@ int tvhpoll_wait
   for (i = 0; i < nfds; i++) {
     evs[i].fd       = tp->ev[i].ident;
     evs[i].events   = 0;
-    evs[i].data.u64 = (intptr_t)tp->ev[i].udata;
+    evs[i].data.ptr = tp->ev[i].udata;
     if (tp->ev[i].filter == EVFILT_WRITE) evs[i].events |= TVHPOLL_OUT;
     if (tp->ev[i].filter == EVFILT_READ)  evs[i].events |= TVHPOLL_IN;
     if (tp->ev[i].flags  & EV_ERROR)     evs[i].events |= TVHPOLL_ERR;

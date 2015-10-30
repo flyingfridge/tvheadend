@@ -31,7 +31,7 @@ typedef struct tvhpoll_event
   int  events;
   union {
     void     *ptr;
-    uint64_t u64;
+    //uint64_t u64; //TODO fails with kqueue on systems with 32bit pointers
     uint32_t u32;
     int      fd;
   }    data;
