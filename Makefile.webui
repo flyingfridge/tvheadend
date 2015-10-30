@@ -164,22 +164,30 @@ define GO_JS
 	$(VV)$(CSS_PY) --in="$^" utf-check
 	$(VV)cat $^ > $@.tmp
 	$(VV)$(RUN_JS) < $@.tmp > $@.tmp2
-	@stat --printf="%-35n %7s\n" $@.tmp $@.tmp2
+	@if ! stat --printf="%-35n %7s\n" $@.tmp $@.tmp2; then \
+	  stat -f "%-35N %7z" $@.tmp $@.tmp2; \
+        fi
 	$(VV)$(GZIPCMD) -c $@.tmp2 > $@.tmp
 	@rm $@.tmp2
 	@mv $@.tmp $@
-	@stat --printf="%-35n %7s\n" $@
+        @if ! stat --printf="%-35n %7s\n" $@; then \
+	  stat -f "%-35N %7z" $@; \
+        fi
 endef
 
 define GO_CSS
 	$(VV)$(CSS_PY) --in="$^" utf-check
 	$(VV)$(CSS_PY) --in="$^" > $@.tmp
 	$(VV)$(RUN_CSS) < $@.tmp > $@.tmp2
-	@stat --printf="%-35n %7s\n" $@.tmp $@.tmp2
+	@if ! stat --printf="%-35n %7s\n" $@.tmp $@.tmp2; then \
+	  stat -f "%-35N %7z" $@.tmp $@.tmp2; \
+        fi
 	$(VV)$(GZIPCMD) -c $@.tmp2 > $@.tmp
 	@rm $@.tmp2
 	@mv $@.tmp $@
-	@stat --printf="%-35n %7s\n" $@
+        @if ! stat --printf="%-35n %7s\n" $@; then \
+	  stat -f "%-35N %7z" $@; \
+        fi
 endef
 
 define merge-po
