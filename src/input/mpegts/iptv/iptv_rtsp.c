@@ -21,7 +21,7 @@
 #include "iptv_private.h"
 #include "iptv_rtcp.h"
 #include "http.h"
-#if ENABLE_ANDROID
+#if ENABLE_ANDROID || defined PLATFORM_FREEBSD
 #include <sys/socket.h>
 #endif
 

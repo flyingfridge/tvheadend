@@ -33,6 +33,9 @@
 #include "tvhpoll.h"
 #include "file.h"
 #include "spawn.h"
+#ifdef PLATFORM_FREEBSD
+#include <signal.h>
+#endif
 
 #if ENABLE_ANDROID
 #define WIFCONTINUED(s) ((s) == 0xffff)

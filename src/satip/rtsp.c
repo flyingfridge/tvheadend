@@ -23,6 +23,9 @@
 #include "profile.h"
 #include "satip/server.h"
 
+#ifdef PLATFORM_FREEBSD
+#include <sys/socket.h>
+#endif
 #include <ctype.h>
 
 #define RTSP_TIMEOUT 30

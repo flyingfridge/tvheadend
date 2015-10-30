@@ -41,6 +41,9 @@
 
 #include "muxer.h"
 
+#ifdef PLATFORM_FREEBSD
+#include <sys/socket.h>
+#endif
 #if ENABLE_ANDROID
 #include <sys/vfs.h>
 #define statvfs statfs

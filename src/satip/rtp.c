@@ -25,7 +25,7 @@
 #include "streaming.h"
 #include "satip/server.h"
 #include <netinet/ip.h>
-#if ENABLE_ANDROID
+#if ENABLE_ANDROID || defined PLATFORM_FREEBSD
 #include <sys/socket.h>
 #endif
 

@@ -40,7 +40,7 @@
 #include "channels.h"
 #include "config.h"
 
-#if ENABLE_ANDROID
+#if ENABLE_ANDROID || defined PLATFORM_FREEBSD
 #include <sys/socket.h>
 #endif
 

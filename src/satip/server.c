@@ -22,6 +22,9 @@
 #include "settings.h"
 #include "config.h"
 #include "satip/server.h"
+#ifdef PLATFORM_FREEBSD
+#include <sys/socket.h>
+#endif
 
 #define UPNP_MAX_AGE 1800
 
