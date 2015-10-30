@@ -1160,7 +1160,8 @@ http_client_add_args ( http_client_t *hc, http_arg_list_t *h, const char *args )
 
   if (args == NULL)
     return;
-  p = strdupa(args);
+  p = alloca(strlen(args)+1);
+  memcpy(p, args, strlen(args)+1);
   while (*p) {
     while (*p && *p <= ' ') p++;
     if (*p == '\0') break;
