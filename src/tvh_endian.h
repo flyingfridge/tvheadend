@@ -18,12 +18,13 @@
 #ifndef __TVH_ENDIAN_H
 #define __TVH_ENDIAN_H
 
-#include <byteswap.h>
 #if defined(PLATFORM_DARWIN)
+#include <byteswap.h>
 #include <machine/endian.h>
 #elif defined(PLATFORM_FREEBSD)
 #include <sys/endian.h>
 #else
+#include <byteswap.h>
 #include <endian.h>
 #endif
 
